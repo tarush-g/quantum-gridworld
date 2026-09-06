@@ -36,7 +36,7 @@ def read_layout(path):
 
     try:
         with open(path, "r") as f:
-            rows = [line.strip() for line in f]
+            rows = ["".join(line.split()) for line in f]
     except FileNotFoundError:
         raise FileNotFoundError(f"File not found")
     except OSError:
@@ -57,16 +57,11 @@ def read_layout(path):
             elif cell == "G":
                 goal = (row, col)
 
-    if start is None:
-        raise ValueError("No start position 'A' found")
-    if goal is None:
-        raise ValueError("No goal position 'G' found")
 
     size = len(rows[0])
     height = len(rows)
     if height != size:
         raise ValueError(f"Must be square: {height} rows but {size} columns")
-
     return start, goal, obstacles, size
 
 def is_reachable(start, goal, obstacles, size):
