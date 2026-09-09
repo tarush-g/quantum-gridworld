@@ -88,3 +88,10 @@ def is_reachable(start, goal, obstacles, size):
             queue.append(neighbor)
 
     return False
+
+def transition_matrix(adj):
+    """Row-normalise an adjacency matrix into a Markov chain transition matrix."""
+    adj = np.asarray(adj, dtype=float)
+    row_sums = adj.sum(axis=1, keepdims=True)
+    P = adj / row_sums
+    return P
