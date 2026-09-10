@@ -115,7 +115,7 @@ class Gridworld(gym.Env):
 
 
 """
-env = Gridworld(size=5, render_mode="human")
+env = Gridworld(size=5, render_mode="human", obstacles=obstacles)
 obs, info = env.reset(seed=42)
 
 for _ in range(20):
@@ -123,5 +123,5 @@ for _ in range(20):
     obs, reward, terminated, truncated, info = env.step(action)
     if terminated:
         print("Reached goal!")
-        break 
+        break
 """
