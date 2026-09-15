@@ -56,7 +56,6 @@ def is_reachable(start, goal, obstacles, size):
 
     return False
 
-
 def read_layout(path):
     obstacles = set()
     try:
@@ -92,8 +91,6 @@ def read_layout(path):
     
     return start, goal, obstacles, size
 
-
-"""Row-normalise adjacency matrix into a Markov chain transition matrix."""
 def transition_matrix(adj):
     adj = np.asarray(adj, dtype=float)
     row_sums = adj.sum(axis=1, keepdims=True)

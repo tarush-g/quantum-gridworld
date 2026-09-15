@@ -55,7 +55,7 @@ class Gridworld(gym.Env):
                 masks[action] = 1
         return masks
 
-    def reset(self, seed=None, options=None):
+    def reset(self, seed=None):
         super().reset(seed=seed)
 
         self.steps_taken = 0
@@ -99,7 +99,7 @@ class Gridworld(gym.Env):
         if self.render_mode != "human":
             return
 
-        grid = np.zeros((self.size, self.size), dtype=int)
+        grid = np.zeros((self.size, self.size), dtype=np.int8)
         for (r, c) in self.obstacles:
             grid[r, c] = 1
         gr, gc = self.goal

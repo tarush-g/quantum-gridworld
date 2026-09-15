@@ -1,8 +1,6 @@
 import numpy as np
 
 def classical(P, steps, start):
-    """Time averaged classical walk distribution."""
- 
     n = P.shape[0]
     p = np.zeros(n)
     p[start] = 1.0
@@ -17,8 +15,6 @@ def classical(P, steps, start):
 
 
 def szegedy(P, steps, start):
-    """Time averaged quantum walk distribution"""
-
     n = P.shape[0]
     P = np.sqrt(P)
 
