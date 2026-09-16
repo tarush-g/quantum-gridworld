@@ -1,5 +1,11 @@
 import numpy as np
 
+def transition_matrix(adj):
+    adj = np.asarray(adj, dtype=float)
+    row_sums = adj.sum(axis=1, keepdims=True)
+    P = adj / row_sums
+    return P
+
 def classical(P, steps, start):
     n = P.shape[0]
     p = np.zeros(n)

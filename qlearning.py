@@ -1,4 +1,5 @@
 import numpy as np
+import walks, graph
 
 def greedy(Q, state, action_mask):
     q_vals = Q[state].copy()
@@ -6,15 +7,16 @@ def greedy(Q, state, action_mask):
     return np.argmax(q_vals)
 
 
-def bonus(walk):
-    pass
+def bonus1(env):
+    P = walks.transition_matrix(env.adjacencies)
+    pi = walks.szegedy(P, 50, env.start)
 
-def train_q_learning(env, episodes=2000, alpha=0.1, gamma=0.95):
+
+def train_q_learning(env, episodes=2000, alpha=0.1, gamma=0.95, beta=0.95):
     """
     alpha = learning rate
     gamma = discount rate
     beta = bonus scale rate
-    
     """
     n_states = env.observation_space.n
     n_actions = env.action_space.n
