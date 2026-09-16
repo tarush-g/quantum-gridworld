@@ -10,6 +10,11 @@ moves = [
 ]
 
 def build_adjacency(size, obstacles):
+    """
+    states = index map dict with {(row, col): state_index}
+    adjacencies = adjacency matrix of the grid
+    successors = array where successors[state_index][action] = next state_index
+    """
     obstacles = set(obstacles or [])
     states = {}
 
@@ -21,15 +26,19 @@ def build_adjacency(size, obstacles):
     # Create adjacency matrix
     num_states = len(states)
     adjacencies = np.zeros((num_states, num_states), dtype=np.int8)
+    successors = np.zeros((num_states, len(moves)), dtype=int)
 
     # Add connections
     for (row, col), index in states.items():
-        for dr, dc in moves:
+        for action, (dr, dc) in enumerate(moves):
             neighbor = (row + dr, col + dc)
             if neighbor in states:
                 adjacencies[index, states[neighbor]] = 1
+                successors[index, action] = states[neighbor]
+            else:
+                successors[index, action] = index
 
-    return states, adjacencies
+    return states, adjacencies, successors
 
 def is_reachable(start, goal, obstacles, size):
     if start == goal:

@@ -1,7 +1,7 @@
 import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
-
+from graph import build_adjacency
 
 class Gridworld(gym.Env):
     def __init__(
@@ -17,17 +17,18 @@ class Gridworld(gym.Env):
         self.size = size
         self.start = start_pos
         self.goal = goal_pos if goal_pos is not None else (size-1, size-1)
-        self.obstacles = obstacles if obstacles is not None else {(1, 1), (1, 2), (2, 3), (3, 1)}
+        self.obstacles = obstacles if obstacles is not None else set()
         self.max_steps = max_steps if max_steps is not None else (4*size*size)
 
-        self.observation_space = spaces.Discrete(size * size)
+        self.states, self.adjacencies, self.successors = build_adjacency(self.size, self.obstacles)
+
+        self.observation_space = spaces.Discrete(len(self.states))
         self.action_space = spaces.Discrete(4)
         self.render_mode = render_mode
         self.agent_pos = None
 
     def _to_index(self, pos):
-        r, c = pos
-        return r * self.size + c
+        return self.states[pos]
 
     def _to_coords(self, index):
         return divmod(index, self.size)
